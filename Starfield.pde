@@ -1,45 +1,74 @@
-//your code here
+Particle[] aBunch = new Particle[100];
 void setup()
 {
-  //your code here
+  size(500, 500);
+  for(int i = 0; i < aBunch.length; i++)
+  {
+    aBunch[i] = new NormalParticle();
+  }
+  aBunch[0] = new Oddball();
+  aBunch[1] = new Jumbo();
 }
 void draw()
 {
-  //your code here
+  background(0, 0, 0);
+  for ( int j = 0; j<aBunch.length; j++)
+  {
+    aBunch[j].move();
+    aBunch[j].show();
+  }
 }
-class NormalParticle
+class NormalParticle implements Particle
 {
   int myColor;
   double mySpeed, myTheta, myX, myY;
-   NormalParticle(int x, int y)
-   {
-     myX = 320;
-     myY = 240;
-     mySpeed = Math.random()*10;
-     myTheta = 2.03;
-   }
-   void move()
-   {
-    myX = myX + Math.cos(dTheta)* mySpeed;
-   myY = myY +  Math.sin(dTheta)* mySpeed;
-   }
-   
-   void show()
-   {
-   ellipse(myX,myY,50,50);  
-   
-   }
-}
-interface Particle
-{
-  //your code here
-}
-class OddballParticle //uses an interface
-{
-  //your code here
-}
-class JumboParticle //uses inheritance
-{
-  //your code here
-}
+  NormalParticle()
+  {
+    myColor = color((int)(Math.random()*50), (int)(Math.random()*50),(int)(Math.random()*256));
+    myX = 450;
+    myY = 0;
+    mySpeed = Math.random()*10;
+    myTheta = 2.03;
+  }
+  public void move()
+  {
+    myX = myX + Math.cos(myTheta)* mySpeed;
+    myY = myY + Math.sin(myTheta)* mySpeed;
+  }
 
+  public void show()
+  {
+     noFill();
+    fill(myColor);
+    ellipse((int)myX,(int)myY,(int)(Math.random()*50),(int)(Math.random()*50));
+  }
+}
+interface Particle 
+{  
+  public void move();  
+  public void show();
+}
+class Oddball implements Particle
+{
+  int myX, myY, mySpeed;
+  double myTheta;
+  Oddball(){
+    myX = myY = 250;
+  }
+  void move(){
+    
+  }
+  void show(){
+    rect(myX ,myY, 50,50);
+  }
+
+}
+class Jumbo extends NormalParticle
+{
+   public void show()
+  {
+     noFill();
+    fill(myColor);
+    ellipse((int)myX,(int)myY,100,100);
+  }
+}
